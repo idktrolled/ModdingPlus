@@ -62,8 +62,6 @@ jobs:
         with:
           name: linuxBuild
           path: export/release/android/bin
-      - name: Copy Week 7 Files
-        run: cp -rf ./Week7Assets/* ./export/release/android/bin/assets
       - name: Publish Artifact
         uses: actions/upload-artifact@main
         with:
