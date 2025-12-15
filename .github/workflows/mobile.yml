@@ -56,14 +56,9 @@ jobs:
           haxelib run lime config JAVA_HOME $JAVA_HOME_17_X64
           haxelib run lime config ANDROID_SETUP true
       - name: Compile
-        run: haxelib run lime build Project.xml linux --app-version="4.0.0-${{ github.run_id}}"
+        run: haxelib run lime build Project.xml android --app-version="4.0.0-${{ github.run_id}}"
       - name: Publish Artifact
         uses: actions/upload-artifact@main
         with:
           name: linuxBuild
-          path: export/release/android/bin
-      - name: Publish Artifact
-        uses: actions/upload-artifact@main
-        with:
-          name: linuxWeek7Build
-          path: export/release/android/bin
+          path: export/release/android/bin/app/build/outputs/apk/debug/*.apk
