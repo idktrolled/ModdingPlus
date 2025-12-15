@@ -27,13 +27,13 @@ jobs:
 
       - uses: krdlab/setup-haxe@master
         with:
-          haxe-version: 4.2.5
+          haxe-version: 4.3.7
       # Runs a set of commands using the runners shell
       - name: Install Haxelib
         run: |
           haxelib setup ~/haxelib
-          haxelib install hxcpp 4.2.1
-          haxelib install lime 7.9.0
+          haxelib install hxcpp
+          haxelib install lime
           haxelib install openfl
           haxelib --never install flixel 4.11.0
           haxelib install flixel-tools
