@@ -27,7 +27,7 @@ jobs:
 
       - uses: krdlab/setup-haxe@master
         with:
-          haxe-version: 4.2.0
+          haxe-version: 4.3.7
       # Runs a set of commands using the runners shell
       - name: Install Haxelib
         run: |
@@ -51,32 +51,23 @@ jobs:
           haxelib list
       - name: Create Version Tag
         run: echo "${{github.run_id}}" > VERSION
+      - name: Configure Android
+        run: |
+          haxelib run lime config ANDROID_SDK $ANDROID_HOME
+          haxelib run lime config ANDROID_NDK_ROOT $ANDROID_NDK_LATEST_HOME
+          haxelib run lime config JAVA_HOME $JAVA_HOME_17_X64
+          haxelib run lime config ANDROID_SETUP true
       - name: Compile
         run: haxelib run lime build Project.xml linux --app-version="4.0.0-${{ github.run_id}}"
       - name: Publish Artifact
         uses: actions/upload-artifact@main
         with:
           name: linuxBuild
-          path: 'export/release/linux/bin' 
+          path: export/release/android/bin
       - name: Copy Week 7 Files
-        run: cp -rf ./Week7Assets/* ./export/release/linux/bin/assets
+        run: cp -rf ./Week7Assets/* ./export/release/android/bin/assets
       - name: Publish Artifact
         uses: actions/upload-artifact@main
         with:
           name: linuxWeek7Build
-          path: export/release/linux/bin
-      - name: Compile HTML5
-        run: haxelib run lime build Project.xml html5
-      
-      - name: Publish Html5
-        uses: actions/upload-artifact@main
-        with:
-          name: html5Build
-          path: export/release/html5/bin
-      - name: Copy Week 7 Files
-        run: cp -rf ./Week7Assets/* ./export/release/html5/bin/assets
-      - name: Publish Artifact
-        uses: actions/upload-artifact@main
-        with:
-          name: html5Week7Build
-          path: export/release/html5/bin
+          path: export/release/android/bin
