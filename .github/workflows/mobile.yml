@@ -35,7 +35,7 @@ jobs:
           haxelib install hxcpp > /dev/null
           haxelib install lime
           haxelib install openfl
-          haxelib --never install flixel 4.10.0
+          haxelib --never install flixel 4.11.0
           haxelib install flixel-tools
           haxelib install flixel-ui 2.4.0
           haxelib install flixel-addons 2.11.0
