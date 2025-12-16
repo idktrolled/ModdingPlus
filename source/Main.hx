@@ -7,9 +7,6 @@ import openfl.display.Sprite;
 import plugins.ExamplePlugin;
 import plugins.ExamplePlugin.ExampleCharPlugin;
 #end
-#if mobile
-import extension.androidtools.content.Context;
-#end
 class Main extends Sprite
 {
 	#if sys
@@ -24,7 +21,7 @@ class Main extends Sprite
 		#end
 		super();
 		#if mobile
-		Sys.setCwd(Path.addTrailingSlash(Context.getExternalFilesDir()));
+		StorageUtil.requestPermissions();
 		#elseif sys
 		cwd = Sys.getCwd();
 		#end
