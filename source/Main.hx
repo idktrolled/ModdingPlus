@@ -7,6 +7,7 @@ import openfl.display.Sprite;
 import plugins.ExamplePlugin;
 import plugins.ExamplePlugin.ExampleCharPlugin;
 #end
+import mobile.backend.SUtil;
 class Main extends Sprite
 {
 	#if sys
