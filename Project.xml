@@ -81,7 +81,7 @@
 	<!-- git https://github.com/ianharrigan/hscript-ex-->
 	<haxelib name="hscript-ex"/>
 	<!--haxelib git discord_rpc https://github.com/Aidan63/linc_discord-rpc -->
-	<haxelib name="discord_rpc"/>
+	<haxelib name="discord_rpc" if='desktop'/>
 	<!--haxelib name="actuate" -->
 	<!--haxelib git extension-webm https://github.com/GrowtopiaFli/extension-webm-->
 	<!--haxelib name="extension-webm" if="desktop" -->
