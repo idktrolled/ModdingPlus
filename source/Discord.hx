@@ -1,7 +1,9 @@
 package;
-#if cpp
+#if CPP
+#if desktop
 import Sys.sleep;
 import discord_rpc.DiscordRpc;
+#end
 #end
 using StringTools;
 
@@ -10,6 +12,7 @@ class DiscordClient
 	public function new()
 	{
         #if cpp
+		#if desktop
 		trace("Discord Client starting...");
 		DiscordRpc.start({
 			clientID: "840632338949210114",
@@ -27,19 +30,23 @@ class DiscordClient
 		}
 
 		DiscordRpc.shutdown();
+		#end
         #end
 	}
 
 	public static function shutdown()
 	{
         #if cpp
+		#if desktop
 		DiscordRpc.shutdown();
         #end
+		#end
 	}
 
 	static function onReady()
 	{
         #if cpp
+		#if desktop
 		DiscordRpc.presence({
 			details: "In the Menus",
 			state: null,
@@ -47,6 +54,7 @@ class DiscordClient
 			largeImageText: "Friday Night Funkin' Modding Plus"
 		});
         #end
+		#end
 	}
 
 	static function onError(_code:Int, _message:String)
@@ -62,11 +70,13 @@ class DiscordClient
 	public static function initialize()
 	{
         #if cpp
+		#if desktop
 		var DiscordDaemon = sys.thread.Thread.create(() ->
 		{
 			new DiscordClient();
 		});
         #end
+		#end
 		trace("Discord Client initialized");
 	}
 
@@ -74,6 +84,7 @@ class DiscordClient
 			?smallImageString:String)
 	{
         #if cpp
+		#if desktop
 		var startTimestamp:Float = if (hasStartTimestamp) Date.now().getTime() else 0;
 
 		if (endTimestamp > 0)
@@ -96,6 +107,7 @@ class DiscordClient
 			endTimestamp: Std.int(endTimestamp / 1000)
 		});
         #end
+		#end
 		// trace('Discord RPC Updated. Arguments: $details, $state, $smallImageKey, $hasStartTimestamp, $endTimestamp');
 	}
 }
