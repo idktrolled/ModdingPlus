@@ -21,10 +21,11 @@ class Main extends Sprite
 		#end
 		super();
 		#if mobile
-		StorageUtil.requestPermissions();
+		SUtil.requestPermissions();
 		#elseif sys
 		cwd = Sys.getCwd();
 		#end
+		mobile.backend.CrashHandler.init();
 		addChild(new FlxGame(0, 0, TitleState, 1, OptionsHandler.options.fpsCap, OptionsHandler.options.fpsCap, true));
 		#if mobile
 		addChild(new FPS(10, 3, 0xFFFFFF));
