@@ -7,6 +7,9 @@ import openfl.display.Sprite;
 import plugins.ExamplePlugin;
 import plugins.ExamplePlugin.ExampleCharPlugin;
 #end
+#if mobile
+import extension.androidtools.content.Context;
+#end
 class Main extends Sprite
 {
 	#if sys
@@ -20,7 +23,9 @@ class Main extends Sprite
 			ExampleCharPlugin;
 		#end
 		super();
-		#if sys
+		#if mobile
+		Sys.setCwd(Path.addTrailingSlash(Context.getExternalFilesDir()));
+		#elseif sys
 		cwd = Sys.getCwd();
 		#end
 		addChild(new FlxGame(0, 0, TitleState, 1, OptionsHandler.options.fpsCap, OptionsHandler.options.fpsCap, true));
