@@ -5,6 +5,7 @@ import haxe.macro.Expr;
 #if !macro
 @:genericBuild(MaskMacro.buildTypeDef())
 #end
+/**
  * Transforms a typedef into a mask (meaning every field becomes a bool)
  */
 class Mask<T> {}
