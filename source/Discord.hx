@@ -1,3 +1,4 @@
+#if desktop
 package;
 #if cpp
 import Sys.sleep;
@@ -99,3 +100,4 @@ class DiscordClient
 		// trace('Discord RPC Updated. Arguments: $details, $state, $smallImageKey, $hasStartTimestamp, $endTimestamp');
 	}
 }
+#end
