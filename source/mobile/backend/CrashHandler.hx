@@ -47,6 +47,7 @@ class CrashHandler
 		var stack = haxe.CallStack.exceptionStack();
 		var stackLabelArr:Array<String> = [];
 		var stackLabel:String = "";
+		var errorText:String = "Oh Shit!";
 		for (e in stack)
 		{
 			switch (e)
@@ -70,50 +71,28 @@ class CrashHandler
 			}
 		}
 		stackLabel = stackLabelArr.join('\r\n');
-
 		#if sys
-		saveErrorMessage('$m\n$stackLabel');
+		try
+		{
+			if (!FileSystem.exists('crash'))
+				FileSystem.createDirectory('crash');
+			var saveError = '$m\n$stackLabel';
+
+			File.saveContent('crash/' + Date.now().toString().replace(' ', '-').replace(':', "'") + '.txt', saveError);
+			errorText = Std.string(saveError);
+			FlxG.state.openSubState(new ErrorSubState(errorText));
+		}
+		catch (e:haxe.Exception)
+			trace('Couldn\'t save error message. (${e.message})');
 		#end
 
-		CoolUtil.showPopUp('$m\n$stackLabel', "Error!");
-		#if DISCORD_ALLOWED DiscordClient.shutdown(); #end
-		lime.system.System.exit(1);
+		// mobile.backend.SUtil.showPopUp('$m\n$stackLabel', "Error!");
 	}
 
 	#if (cpp || hl)
 	private static function onError(message:Dynamic):Void
 	{
-		final log:Array<String> = [];
-
-		if (message != null && message.length > 0)
-			log.push(message);
-
-		log.push(haxe.CallStack.toString(haxe.CallStack.exceptionStack(true)));
-
-		#if sys
-		saveErrorMessage(log.join('\n'));
-		#end
-
-		CoolUtil.showPopUp(log.join('\n'), "Critical Error!");
-		#if DISCORD_ALLOWED DiscordClient.shutdown(); #end
-		lime.system.System.exit(1);
+		throw Std.string(message);
 	}
 	#end
-
-	#if sys
-	private static function saveErrorMessage(message:String):Void
-	{
-		try
-		{
-			if (!FileSystem.exists('logs'))
-				FileSystem.createDirectory('logs');
-
-			File.saveContent('logs/'
-				+ Date.now().toString().replace(' ', '-').replace(':', "'")
-				+ '.txt', message);
-		}
-		catch (e:haxe.Exception)
-			trace('Couldn\'t save error message. (${e.message})');
-	}
-	#end
-      }
+}
