@@ -132,8 +132,8 @@ class SUtil
 
 		try
 		{
-			if (!FileSystem.exists(StorageUtil.getStorageDirectory()))
-				createDirectories(StorageUtil.getStorageDirectory());
+			if (!FileSystem.exists(SUtil.getStorageDirectory()))
+				createDirectories(SUtil.getStorageDirectory());
 		}
 		catch (e:Dynamic)
 		{
