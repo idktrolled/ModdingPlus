@@ -1,5 +1,6 @@
 package mobile.backend;
 
+import flixel.FlxG;
 import openfl.events.UncaughtErrorEvent;
 import openfl.events.ErrorEvent;
 import openfl.errors.Error;
