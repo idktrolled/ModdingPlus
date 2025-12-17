@@ -37,7 +37,7 @@ jobs:
       - name: Install Haxelib
         run: |
           haxelib git hxcpp https://github.com/HaxeFoundation/hxcpp
-          haxelib git lime https://github.com/idktrolled/limel
+          haxelib git lime https://github.com/kittycathy233/lime
           haxelib install openfl
           haxelib --never install flixel 4.11.0
           haxelib install flixel-tools
@@ -50,7 +50,6 @@ jobs:
           haxelib git hscript-ex https://github.com/ianharrigan/hscript-ex
           haxelib git discord_rpc https://github.com/Aidan63/linc_discord-rpc
           haxelib install hxcpp-debug-server
-          haxelib install extension-androidtools
           haxelib run lime rebuild hxcpp
           haxelib list
       - name: Configure Android
