@@ -14,6 +14,7 @@ import openfl.utils.Assets as OpenFLAssets;
 import flixel.addons.util.FlxAsyncLoop;
 import openfl.utils.ByteArray;
 import haxe.io.Path;
+import mobile.backend.SUtil;
 
 using StringTools;
 
@@ -48,7 +49,7 @@ class CopyState extends MusicBeatState
 		}
 
 		#if (!ios || !iphoneos || !iphonesim)
-		CoolUtil.showPopUp("Seems like you have some missing files that are necessary to run the game\nPress OK to begin the copy process", "Notice!");
+		SUtil.showPopUp("Seems like you have some missing files that are necessary to run the game\nPress OK to begin the copy process", "Notice!");
 		#end
 
 		shouldCopy = true;
@@ -87,7 +88,7 @@ class CopyState extends MusicBeatState
 				if (failedFiles.length > 0)
 				{
 					#if (!ios || !iphoneos || !iphonesim)
-					CoolUtil.showPopUp(failedFiles.join('\n'), 'Failed To Copy ${failedFiles.length} File.');
+					SUtil.showPopUp(failedFiles.join('\n'), 'Failed To Copy ${failedFiles.length} File.');
 					#end
 					if (!FileSystem.exists('logs'))
 						FileSystem.createDirectory('logs');
@@ -116,7 +117,7 @@ class CopyState extends MusicBeatState
 		{
 			var directory = Path.directory(file);
 			if (!FileSystem.exists(directory))
-				StorageUtil.createDirectories(directory);
+				SUtil.createDirectories(directory);
 			try
 			{
 				if (OpenFLAssets.exists(getFile(file)))
@@ -150,7 +151,7 @@ class CopyState extends MusicBeatState
 			if (fileData == null)
 				fileData = '';
 			if (!FileSystem.exists(directory))
-				StorageUtil.createDirectories(directory);
+				SUtil.createDirectories(directory);
 			File.saveContent(Path.join([directory, fileName]), fileData);
 		}
 		catch (e:haxe.Exception)
