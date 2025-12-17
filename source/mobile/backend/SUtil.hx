@@ -20,7 +20,7 @@ class ClientPrefs {
   public static var data:SaveVariables = {};
 }
 
-class StorageUtil
+class SUtil
 {
 	#if sys
 	public static final rootDir:String = LimeSystem.applicationStorageDirectory;
