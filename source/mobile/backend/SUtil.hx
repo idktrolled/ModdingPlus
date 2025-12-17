@@ -11,7 +11,7 @@ import haxe.Exception;
 using StringTools;
 
 @:structInit class SaveVariables {
-    #if android
+    #if mobile
 	public var storageType:String = "EXTERNAL";
 	#end
 }
@@ -27,7 +27,7 @@ class SUtil
 
 	public static function showPopUp(message:String, title:String):Void
 	{
-		#if android
+		#if mobile
 		Tools.showAlertDialog(title, message, {name: "OK", func: null}, null);
 		#else
 		FlxG.stage.window.alert(message, title);
@@ -37,7 +37,7 @@ class SUtil
 	public static function getStorageDirectory(?force:Bool = false):String
 	{
 		var daPath:String = '';
-		#if android
+		#if mobile
 		if (!FileSystem.exists(rootDir + 'storagetype.txt'))
 			File.saveContent(rootDir + 'storagetype.txt', ClientPrefs.data.storageType);
 		var curStorageType:String = File.getContent(rootDir + 'storagetype.txt');
@@ -108,7 +108,7 @@ class SUtil
 				trace('$fileName couldn\'t be saved. (${e.message})');
 	}
 
-	#if android
+	#if mobile
 	public static function requestPermissions():Void
 	{
 		if (VERSION.SDK_INT >= VERSION_CODES.TIRAMISU)
@@ -165,7 +165,7 @@ class SUtil
 	#end
 }
 
-#if android
+#if mobile
 @:runtimeValue
 enum abstract StorageType(String) from String to String
 {
