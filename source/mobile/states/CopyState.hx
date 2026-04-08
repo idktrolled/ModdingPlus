@@ -1,27 +1,29 @@
-package mobile.states;
+package;
 
-#if mobile
 #if sys
 import sys.*;
 import sys.io.*;
 #end
+#if mobile
+import lime.utils.Assets as LimeAssets;
+import openfl.utils.Assets as OpenFLAssets;
+import openfl.utils.ByteArray;
+import haxe.io.Path;
 import flixel.FlxG;
 import flixel.FlxSprite;
 import flixel.text.FlxText;
 import flixel.util.FlxColor;
-import lime.utils.Assets as LimeAssets;
-import openfl.utils.Assets as OpenFLAssets;
+import flixel.util.FlxTimer;
+import flixel.ui.FlxBar;
+import flixel.ui.FlxBar.FlxBarFillDirection;
 import flixel.addons.util.FlxAsyncLoop;
-import openfl.utils.ByteArray;
-import haxe.io.Path;
-import mobile.backend.SUtil;
 
 using StringTools;
 
 class CopyState extends MusicBeatState
 {
 	private static final textFilesExtensions:Array<String> = ['ini', 'txt', 'xml', 'hxs', 'hx', 'lua', 'json', 'frag', 'vert'];
-	public static final IGNORE_FOLDER_FILE_NAME:String = "ignore.txt";
+	public static final IGNORE_FOLDER_FILE_NAME:String = "CopyState-Ignore.txt";
 	private static var directoriesToIgnore:Array<String> = [];
 	public static var locatedFiles:Array<String> = [];
 	public static var maxLoopTimes:Int = 0;
@@ -48,16 +50,15 @@ class CopyState extends MusicBeatState
 			return;
 		}
 
-		#if (!ios || !iphoneos || !iphonesim)
-		SUtil.showPopUp("Seems like you have some missing files that are necessary to run the game\nPress OK to begin the copy process", "Notice!");
-		#end
+		CoolUtil.showPopUp("Seems like you have some missing files that are necessary to run the game\nPress OK to begin the copy process", "Notice!");
 
 		shouldCopy = true;
 
-		add(new FlxSprite(0, 0).makeGraphic(FlxG.width, FlxG.height, 0xffcaff4d));
-
-		loadingImage = new FlxSprite(0, 0).loadGraphic(Paths.image('menuDesat'));
+		loadingImage = new FlxSprite(-80).loadGraphic(Paths.image('menuDesat'));
+		loadingImage.setGraphicSize(Std.int(loadingImage.width * 1.1));
+		loadingImage.updateHitbox();
 		loadingImage.screenCenter();
+		loadingImage.antialiasing = true;
 		add(loadingImage);
 
 		bottomBG = new FlxSprite(0, FlxG.height - 26).makeGraphic(FlxG.width, 26, 0xFF000000);
@@ -68,8 +69,8 @@ class CopyState extends MusicBeatState
 		loadedText.setFormat(Paths.font("vcr.ttf"), 16, FlxColor.WHITE, CENTER);
 		add(loadedText);
 
-		var ticks:Int = 15;
-		if (maxLoopTimes <= 15)
+		var ticks:Int = 16;
+		if (maxLoopTimes <= 16)
 			ticks = 1;
 
 		copyLoop = new FlxAsyncLoop(maxLoopTimes, copyAsset, ticks);
@@ -87,16 +88,13 @@ class CopyState extends MusicBeatState
 			{
 				if (failedFiles.length > 0)
 				{
-					#if (!ios || !iphoneos || !iphonesim)
-					SUtil.showPopUp(failedFiles.join('\n'), 'Failed To Copy ${failedFiles.length} File.');
-					#end
+					CoolUtil.showPopUp(failedFiles.join('\n'), 'Failed To Copy ${failedFiles.length} File.');
 					if (!FileSystem.exists('logs'))
 						FileSystem.createDirectory('logs');
 					File.saveContent('logs/' + Date.now().toString().replace(' ', '-').replace(':', "'") + '-CopyState' + '.txt', failedFilesStack.join('\n'));
 				}
 				canUpdate = false;
-				FlxG.sound.play(Paths.sound('confirmMenu')).onComplete = () ->
-				{
+				FlxG.sound.play(Paths.sound('confirmMenu')).onComplete = () -> {
 					FlxG.switchState(new TitleState());
 				};
 			}
@@ -117,7 +115,7 @@ class CopyState extends MusicBeatState
 		{
 			var directory = Path.directory(file);
 			if (!FileSystem.exists(directory))
-				SUtil.createDirectories(directory);
+				FileSystem.createDirectory(directory);
 			try
 			{
 				if (OpenFLAssets.exists(getFile(file)))
@@ -151,7 +149,7 @@ class CopyState extends MusicBeatState
 			if (fileData == null)
 				fileData = '';
 			if (!FileSystem.exists(directory))
-				SUtil.createDirectories(directory);
+				FileSystem.createDirectory(directory);
 			File.saveContent(Path.join([directory, fileName]), fileData);
 		}
 		catch (e:haxe.Exception)
@@ -163,7 +161,7 @@ class CopyState extends MusicBeatState
 
 	public function getFileBytes(file:String):ByteArray
 	{
-		switch (Path.extension(file))
+		switch (Path.extension(file).toLowerCase())
 		{
 			case 'otf' | 'ttf':
 				return ByteArray.fromFile(file);
@@ -193,7 +191,7 @@ class CopyState extends MusicBeatState
 
 		var assets = locatedFiles.filter(folder -> folder.startsWith('assets/'));
 		var mods = locatedFiles.filter(folder -> folder.startsWith('mods/'));
-		var templates = locatedFiles.filter(folder -> folder.startsWith('Templates/'));
+		var templates = locatedFiles.filter(folder -> folder.startsWith('templates/'));
 		locatedFiles = assets.concat(mods);
 		locatedFiles = locatedFiles.filter(file -> !FileSystem.exists(file));
 
