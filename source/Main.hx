@@ -33,8 +33,8 @@ class Main extends Sprite
 		#if sys
 		cwd = Sys.getCwd();
 		#end
-		addChild(new FlxGame(0, 0, #if mobile CopyState.checkExistingFiles() ? TitleState : CopyState #else TitleState #end, 1, OptionsHandler.options.fpsCap, OptionsHandler.options.fpsCap, true));
-		#if !mobile
+		addChild(new FlxGame(1280, 720, #if mobile CopyState.checkExistingFiles() ? TitleState : CopyState #else TitleState #end, 1, OptionsHandler.options.fpsCap, OptionsHandler.options.fpsCap, true));
+		#if mobile
 		addChild(new FPS(10, 3, 0xFFFFFF));
 		addChild(new MemoryCounter(10, 3, 0xFFFFFF));
 		#end
