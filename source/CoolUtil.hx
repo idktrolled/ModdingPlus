@@ -71,6 +71,10 @@ class CoolUtil
 	{
 		return HelperFunctions.wife3(maxms, ts);
 	}
+	public static function showPopUp(message:String, title:String):Void
+	{
+		FlxG.stage.window.alert(message, title);
+	}
 }
 
 class FlxTools {
