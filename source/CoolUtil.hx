@@ -5,6 +5,7 @@ import flixel.FlxSprite;
 import lime.utils.Assets;
 import lime.system.System;
 import tjson.TJSON;
+import flixel.FlxG;
 using StringTools;
 
 
