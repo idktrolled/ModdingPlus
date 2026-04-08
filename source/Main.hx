@@ -7,6 +7,10 @@ import openfl.display.Sprite;
 import plugins.ExamplePlugin;
 import plugins.ExamplePlugin.ExampleCharPlugin;
 #end
+#if mobile
+import mobile.backend.SUtil;
+import mobile.states.CopyState;
+#end
 class Main extends Sprite
 {
 	#if sys
@@ -16,9 +20,9 @@ class Main extends Sprite
 	{
 		#if mobile
 		#if android
-		StorageUtil.requestPermissions();
+		SUtil.requestPermissions();
 		#end
-		Sys.setCwd(StorageUtil.getStorageDirectory());
+		Sys.setCwd(SUtil.getStorageDirectory());
 		#end
 		#if typebuild
 			// god is dead
