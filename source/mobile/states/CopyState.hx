@@ -191,7 +191,6 @@ class CopyState extends MusicBeatState
 
 		var assets = locatedFiles.filter(folder -> folder.startsWith('assets/'));
 		var mods = locatedFiles.filter(folder -> folder.startsWith('mods/'));
-		var templates = locatedFiles.filter(folder -> folder.startsWith('templates/'));
 		locatedFiles = assets.concat(mods);
 		locatedFiles = locatedFiles.filter(file -> !FileSystem.exists(file));
 
