@@ -1,4 +1,4 @@
-package;
+package mobile.states;
 
 #if sys
 import sys.*;
