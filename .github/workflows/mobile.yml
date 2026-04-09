@@ -39,10 +39,9 @@ jobs:
           haxelib git hxcpp https://github.com/HaxeFoundation/hxcpp
           haxelib git lime https://github.com/kittycathy233/lime
           haxelib install openfl
-          haxelib --never install flixel 4.11.0
-          haxelib install flixel-tools
+          haxelib --never install flixel 4.9.0
           haxelib install flixel-ui 2.4.0
-          haxelib install flixel-addons 2.11.0
+          haxelib install flixel-addons 2.9.0
           haxelib install tjson
           haxelib install hxjsonast
           haxelib install linc_luajit
